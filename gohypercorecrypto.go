@@ -101,8 +101,10 @@ func HashTree(roots []Node) (*[]byte, error) {
 		var tempBytesIndex, tempBytesLength []byte
 		tempBytesIndex = make([]byte, 8)
 		tempBytesLength = make([]byte, 8)
-		hashList = append(hashList, binary.BigEndian.PutUint64(tempBytesIndex, uint64(roots[i].Index)))
-		hashList = append(hashList, binary.BigEndian.PutUint64(tempBytesLength, uint64(roots[i].Length)))
+		binary.BigEndian.PutUint64(tempBytesIndex, uint64(roots[i].Index))
+		binary.BigEndian.PutUint64(tempBytesLength, uint64(roots[i].Length))
+		hashList = append(hashList, tempBytesIndex)
+		hashList = append(hashList, tempBytesLength)
 	}
 	return Blake2bList(hashList)
 }
